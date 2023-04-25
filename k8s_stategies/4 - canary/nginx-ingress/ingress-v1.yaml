@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: goprom
+  labels:
+    app: goprom
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: goprom.com
+    http:
+      paths:
+      - backend:
+          serviceName: goprom-v1
+          servicePort: 80

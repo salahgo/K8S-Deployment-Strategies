@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: goprom
+  labels:
+    app: goprom
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app: goprom
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goprom-v1
+  labels:
+    app: goprom
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goprom
+      version: v1.0.0
+  template:
+    metadata:
+      labels:
+        app: goprom
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9101"
+    spec:
+      containers:
+      - name: goprom
+        image: tecpi/goprom
+        imagePullPolicy: Never
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: probe
+          containerPort: 8086
+        env:
+        - name: VERSION
+          value: v1.0.0
+        livenessProbe:
+          httpGet:
+            path: /live
+            port: probe
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: probe
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: 5m

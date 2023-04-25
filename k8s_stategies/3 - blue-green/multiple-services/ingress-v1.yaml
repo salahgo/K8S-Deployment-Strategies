@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: goprom
+  labels:
+    app: goprom
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: a.domain.com
+    http:
+      paths:
+      - backend:
+          serviceName: goprom-a-v1
+          servicePort: 80
+  - host: b.domain.com
+    http:
+      paths:
+      - backend:
+          serviceName: goprom-b-v1
+          servicePort: 80
