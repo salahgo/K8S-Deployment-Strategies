@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: goprom
-        image: tecpi/goprom
+        image: username/goprom
         imagePullPolicy: Never
         ports:
         - name: http

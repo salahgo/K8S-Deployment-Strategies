@@ -31,7 +31,7 @@ $ docker run -d \
     -p 9101:9101 \
     -h host-1 \
     -e VERSION=v1.0.0
-    tecpi/goprom
+    username/goprom
 ```
 
 #### Test

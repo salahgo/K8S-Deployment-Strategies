@@ -3,7 +3,7 @@
 all: test-all build
 
 build:
-	docker build --no-cache -t tecpi/goprom .
+	docker build --no-cache -t username/goprom .
 
 test-all: vet lint test
 
